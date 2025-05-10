@@ -1,91 +1,122 @@
-YouTube Downloader Termux Integration Guide
+Termux YouTube Downloader Installation and Usage Guide
 
-This guide explains how to set up the YouTube Downloader Android integration for Termux using the script from DrDelin/Youtube-Downloader-Android.
+Installation (One-Line Script)
 
+Paste the following command into your Termux session:
 
----
+pkg update -y && pkg install -y python git && pip install --upgrade pip setuptools wheel && pip install requests termcolor beautifulsoup4 && git clone https://github.com/DrDelin/Youtube-Downloader-Android.git && cd Youtube-Downloader-Android && chmod +x install.sh && ./install.sh && mkdir -p ~/bin && curl -Ls https://raw.githubusercontent.com/DrDelin/Youtube-Downloader-Android/master/termux-url-opener | sed '1s|^.*$|#!/data/data/com.termux/files/usr/bin/bash|' > ~/bin/termux-url-opener && chmod +x ~/bin/termux-url-opener
 
-Installation Steps
+Important Notes
 
-Open Termux and paste the following command to install the required scripts and dependencies:
+Do not go AFK while this runs. You may be prompted to type Y during package installations.
 
-mkdir -p ~/bin && \
-curl -Ls https://raw.githubusercontent.com/DrDelin/Youtube-Downloader-Android/master/termux-url-opener | sed '1s|^.*$|#!/data/data/com.termux/files/usr/bin/bash|' > ~/bin/termux-url-opener && \
-chmod +x ~/bin/termux-url-opener && \
-curl -Ls https://raw.githubusercontent.com/DrDelin/Youtube-Downloader-Android/master/refresh.sh | sed '1s|^.*$|#!/data/data/com.termux/files/usr/bin/bash|' > ~/refresh.sh && \
-chmod +x ~/refresh.sh && \
-curl -Ls https://raw.githubusercontent.com/DrDelin/Youtube-Downloader-Android/master/updater.py > ~/updater.py && \
-python3 -m pip install --upgrade pip setuptools wheel && \
-python3 -m pip install requests
-
-
----
-
-Additional Setup
-
-If you haven't already, allow Termux access to your device's storage:
+After installation, you may need to run:
 
 termux-setup-storage
 
-This will prompt you to allow storage permissions. Accept them.
-
-
----
-
-How to Use
-
-1. Open the YouTube app (or another media platform like TikTok).
-
-
-2. Tap Share on the video or channel you want to download.
-
-
-3. Tap More.
-
-
-4. Select Termux from the list.
-
-
-5. The script will automatically begin downloading the media.
-
+...to allow Termux access to your shared storage.
 
 
 
 ---
 
-Where Are the Files Saved?
+How to Use the Downloader
 
-Downloaded files are stored in a folder named Termux_Downloader in shared internal storage, not in the default Downloads folder.
-
-Inside Termux_Downloader, videos are organized by the media platform they were downloaded from. For example:
-
-Termux_Downloader/youtube/
-
-Termux_Downloader/TikTok/
+1. Open YouTube, TikTok, or any supported media app.
 
 
-
----
-
-Downloading Entire Channels
-
-To download an entire channel:
-
-1. Go to the channel page in the YouTube app.
-
-
-2. Tap Share.
+2. Tap Share on the video, playlist, or channel.
 
 
 3. Tap More and select Termux.
 
 
-4. The downloader will begin fetching all videos from that channel.
+4. The downloader interface will pop up with four options:
+
+
+
+Menu Options When Sharing a Link
+
+1. Best (Shortcut: b)
+
+Automatically chooses the best quality audio+video.
+
+Ideal for users who just want the highest quality without extra steps.
+
+
+2. Advanced (Shortcut: m)
+
+Shows a green list of available formats.
+
+Each green line contains an ID, encoding details, and media type.
+
+Type the ID to select a format.
+
+Useful if you want to choose specific quality or encoding.
+
+Caution: Not beginner-friendly due to technical jargon.
+
+
+Legend:
+
+video only = has video and audio (despite the name)
+
+audio only = audio track only
+
+
+3. Audio (Shortcut: a)
+
+Lets you choose audio-only download.
+
+After choosing, it asks what format to convert to (e.g., mp3, m4a).
+
+Tip: mp3 offers best compression and cross-platform support.
+
+
+Works on many platforms, not just YouTube.
+
+
+4. Video (Shortcut: v)
+
+Lets you choose resolution for video (e.g., 1080p, 720p, 480p, etc.).
+
+Works for single videos, playlists, and full channels.
+
+
+Subtitle Options (All Modes)
+
+Prompt: "Do you want subtitles?"
+
+Type skip! to skip subtitle download.
+
+Type y to embed subtitles into the video.
 
 
 
 
 ---
 
-That's it! You now have a working YouTube (and multi-site) downloader integrated with Termux's share menu.
+Where Are Downloads Saved?
+
+Downloads are stored in: ~/storage/shared/Termux_Downloader/
+
+Inside that folder, content is organized by platform:
+
+youtube/
+
+tiktok/
+
+etc/
+
+
+
+
+---
+
+Summary of Shortcut Keys
+
+
+---
+
+You’re now set to download videos, audio, playlists, and channels directly through Termux with custom options and formats!
 
